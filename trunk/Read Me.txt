@@ -1,0 +1,17 @@
+-This is folder for Sample Source code of MC40SE.
+-All code being developed and compiled under:
+~MPLAB IDE v8.63 + HI TECH C Compiler for PIC10/12/16 MCUs (Lite Mode) v9.80
+-Other version of software might have different identifier for register. Cytron do not bare the resposibility to ensure code compatible
+-All files are free to modify, but we do not support modification. It is user resposibility to do so.
+-These files and example are for reference only.
+
+Open MPLAB IDE, open this project from Project - > Open..., select MC40SE.mcp file.
+The MPLAB will automatic open all the files. By default, the project is compiled with "MC40SE 16F887 Template.c".
+If you want to change other example, please remove "MC40SE 16F887 Template.c" from project window under "Source Files" 
+and add the file you like to compile such as "MC40SE 16F887 Analog.c". 
+There cannot be two or more main function in a project. All c files start with MC40SE will have a main function in it.
+Therefore a project cannot have more than one file that start with "MC40SE".
+
+Hex file for all example have been label properly, you can download it using PICkit 2 software.
+
+If you have problem, please discuss in our technical forum: http://forum.cytron.com.my
