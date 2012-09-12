@@ -1,8 +1,8 @@
 /*******************************************************************************
 * This is the main program to sanity test the MC40SE Controller using PIC16F887
-* This sample code is compiled under MPLAB IDE v8.63 with Hi-Tech C Pro Compiler (Lite Mode) V9.80
+* This sample code is compiled under MPLAB IDE v8.85 with Hi-Tech C Pro Compiler (Lite Mode) V9.83
 * Author: Ober Choo Sui Hong @ Cytron Technologies Sdn. Bhd.
-* Date: 20 Jan 2012
+* Date: 31 Aug 2012
 *******************************************************************************/
 #include <htc.h>
 #include "system.h"
@@ -17,17 +17,38 @@
 * DEVICE CONFIGURATION WORDS FOR PIC16F887                                     *
 *******************************************************************************/
 
-__CONFIG( INTIO &		// Internal Clock, pins as I/O.
-		 //HS &			// External Crystal at High Speed
-		 WDTDIS &		// Disable Watchdog Timer.
-		 PWRTEN &		// Enable Power Up Timer.
-		 IESOEN &			// Enabled Internal External Clock Switch Over
-		 //IESODIS &		// Disabled Internal External Clock Switch Over
-		 BORDIS &		// Disable Brown Out Reset.
-		 //FCMDIS	&		// Disable monitor clock fail safe
-		 FCMEN &		// Enable monitor clock fail safe
-		 MCLREN &		// MCLR function is enabled
-		 LVPDIS);		// Disable Low Voltage Programming.
+	#if defined (_16F887) // if this file is compile for PIC16F887
+	__CONFIG(0x2CE4);	//1st configuration words
+	__CONFIG(0x3FFF);	//2nd configuration words
+	
+	// for reference only
+	/*__CONFIG( INTIO &		// Internal Clock, pins as I/O.
+			 //HS &			// External Crystal at High Speed
+			 WDTDIS &		// Disable Watchdog Timer.
+			 PWRTEN &		// Enable Power Up Timer.
+			 IESOEN &			// Enabled Internal External Clock Switch Over
+			 //IESODIS &		// Disabled Internal External Clock Switch Over
+			 BORDIS &		// Disable Brown Out Reset.
+			 //FCMDIS	&		// Disable monitor clock fail safe
+			 FCMEN &		// Enable monitor clock fail safe
+			 MCLREN &		// MCLR function is enabled
+			 LVPDIS);		// Disable Low Voltage Programming.
+			 
+	*/		 
+	#elif defined (_16F877A) // if this file is compile for PIC16F877A		 
+	__CONFIG(0x3F32);
+	
+	//for reference only
+	/*__CONFIG(HS &			// High Speed Crystal.
+			 WDTDIS &		// Disable Watchdog Timer.
+			 PWRTEN &		// Enable Power Up Timer.
+			 BORDIS &		// Disable Brown Out Reset.
+			 LVPDIS);		// Disable Low Voltage Programming.
+	*/
+	#endif	//end of pre-processor if condition, choosing between PIC16F887 or PIC16F877A
+
+
+
 
 /*******************************************************************************
 * PRIVATE CONSTANT DEFINE                                                  *
@@ -309,10 +330,12 @@ void beep(unsigned char uc_count)
 *******************************************************************************/
 void mc40se_init(void)
 {
+	#if defined(_16F887)	// PIC16F887 internal clock, 16F877A don't have
 	// Initialize the Internal Osc, under OSCCON register
 	IRCF2 = 1;		// IRCF<2:0> = 111 => 8MHz
 	IRCF1 = 1;		// IRCF<2:0> = 110 => 4MHz, default
 	IRCF0 = 1;		// IRCF<2:0> = 101 => 2MHz, 
+	#endif
 		
 	// clear port value
 	PORTA = 0;

@@ -32,6 +32,10 @@
 #ifndef _SYSTEM_H	// if this file has not been include, include again
 #define _SYSTEM_H
 
+// Hi-TECH Compiler version
+//#define 	HITECH_V9_80
+#define HITECH_V9_82		//tested with HITECH V9.82 and V9.83
+
 // Oscillator Frequency.
 #if defined (_16F887) // if this file is compile for PIC16F887
 // user may choose 8MHz (internal crystal) or 20MHz (external crystal)
