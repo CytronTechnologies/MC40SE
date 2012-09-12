@@ -109,8 +109,13 @@ extern unsigned int ui_adc_read(void)
 	__delay_ms(5);
 	
 	// Start the conversion and wait for it to complete.
-	GODONE = 1;
-	while (GODONE == 1);
+	#if defined (HITECH_V9_80)	//if Hi-Tech V9.80 compiler is used
+	ADGO = 1;				//start ADC conversion
+	while (ADGO == 1);		//wait for ADC to complete the conversion
+	#elif defined (HITECH_V9_82)	//if Hi-Tech V9.82 compiler is used
+	GO_DONE = 1;			//start ADC conversion
+	while (GO_DONE == 1);		//await for ADC to complete the conversion
+	#endif	
 	
 	// Return the ADC result.
 	temp = ADRESH << 8;
